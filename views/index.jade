@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  p #{desc}
+  p
+  each page in pages
+      li
+        a(href=page['link'], title=page['title']) #{page['text']}

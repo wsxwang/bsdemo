@@ -1,0 +1,7 @@
+extends ../../views/layout
+
+block content
+    h1#pagetitle= pagetitle
+    each i in items
+        li=i
+    link(rel='stylesheet', href='/src/jadedemo/jadedemo.css')

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="">
+<head>
+    <meta charset="UTF-8">
+    <title>html+vue</title>
+</head>
+<body>
+<!-- 以ID：tabledemo与vue实例绑定 -->
+<div id="tabledemo" class="div">
+    <h1 id="head" class="h" v-bind:title='headtitle'>
+        {{headmessage}}
+    </h1>
+    <!-- 分两个部分：div-config和div-content，分别承载表格的配置和表格本身 -->
+    <div id="div-config" class="div">
+        列头  <input name="columnname" v-model="column" title="逗号分割">
+        <br>
+        行数  <input name="rowcount" v-model="rowcount">
+        <br>
+        <button @click="filldata">重新生成</button>
+    </div>
+    <div id="div-content" class="div">
+        <!-- 表格使用自定义的vue组件autofill-table，将vue实例的columns和rows数据分别与heads和data属性绑定 -->
+        <autofill-table id="autofill-table" v-bind:heads="columns" v-bind:celldatas="rows"></autofill-table>
+    </div>
+</div>
+
+<!-- 使用script方式引入vue -->
+<script src='https://unpkg.com/vue@2.0.5/dist/vue.js'></script>
+
+<!--表格模板，用于autofill-table-->
+<script type="text/x-template" id="table-template">
+    <table>
+        <thead>
+            <tr>
+                <th v-for="h in heads">{{h}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="r in celldatas">
+                <td v-for="cell in r">{{cell}}</td>
+            </tr>
+        </tbody>
+    </table>
+</script>
+
+<!-- Vue -->
+<script>
+    // 定义一个Vue组件，动态生成表格，使用表格模板table-template
+    Vue.component('autofill-table',{
+        template:"#table-template",
+        props: {
+            celldatas: Array,           //数据数据
+            heads: Array                //列头数组
+        }
+    });
+
+    var app = new Vue({
+        el: '#tabledemo',
+        data: {
+            headmessage: '表格demo，html网页嵌入vue脚本',
+            headtitle:'可定制列头和行数，随机生成数据',
+            column:'编号,数量', //列头
+            rowcount:10,         //行数
+            columns:["编号", "数量"],         //列头列表
+            rows:[]              //行数据
+        },
+        methods:{
+            // 生成表格，变更数据columns和rows
+            filldata: function () {
+                this.columns = this.column.split(",");
+                this.rows = new Array(this.rowcount);
+                for(var i = 0; i < this.rowcount; i ++)
+                {
+                    this.rows[i] = {};
+                    for(var j = 0; j < this.columns.length; j ++)
+                    {
+                        //this.rows[i][j] = i.toString() + "," + j.toString();
+                        this.rows[i][j] =  Math.floor(Math.random() * 100).toString();
+                    }
+                }
+            }
+        }
+    })
+</script>
+
+<!-- css -->
+<style type="text/css">
+    #tabledemo h1{
+        width : 900px;
+        height : 50px;
+        padding : 50px;
+        margin : 20px;
+        border-width : 15px;
+        border-color : darkolivegreen;
+        border-style : double;
+        text-align : center;
+        color: mediumslateblue;
+        background-color: beige;
+    }
+    #div-content table, th, td{
+        border: 1px solid black;
+    }
+    #div-content td{
+        border: dashed blue;
+    }
+</style>
+</body>
+</html>
