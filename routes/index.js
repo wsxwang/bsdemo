@@ -8,9 +8,6 @@ var jadedemo = require('../src/jadedemo/jadedemo');
 router.use('/jadedemo', jadedemo);
 var elementuidemo = require('../src/elementuidemo/elementuidemo');
 router.use('/elementuidemo', elementuidemo);
-var dbopr = require('../src/dbopr/dbopr');
-router.use('/dbopr', dbopr);
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', {
@@ -20,7 +17,6 @@ router.get('/', function(req, res, next) {
           {link: 'htmldemo', text:'html+vue定制表格', title:'适用于前端交互式页面'},
           {link: 'jadedemo', text:'jade渲染', title:'适用于后端展示页面'},
           {link:'elementuidemo', text:'element ui', tilte:'element ui的学习demo'},
-          {link: 'dbopr', text:'sqlite数据库操作', title:'应用html+vue+elementui等技术'},
       ]
   });
 });
