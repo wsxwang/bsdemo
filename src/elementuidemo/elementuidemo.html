@@ -3,8 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>学习elementui的demo</title>
+    <!-- 使用script方式引入vue -->
+    <script src="//unpkg.com/vue/dist/vue.js"></script>
+    <!-- 使用script方式引入elementui -->
+    <script src="//unpkg.com/element-ui@1.4.4/lib/index.js"></script>
 </head>
 <body>
-
+<div id="elementuidemo">
+    <h1>{{message}}</h1>
+    <el-row>
+        <el-col :span="12">
+            <div class="grid-content bg-purple">
+            <el-collapse v-model="chosenPanel" accordion v-on:change="OnChange">
+                <el-collapse-item title="进度条" name="1">
+                    <div>进度条演示</div>
+                </el-collapse-item>
+                <el-collapse-item title="未实现" name="2">
+                    <div>xxxx</div>
+                </el-collapse-item>
+            </el-collapse>
+            </div>
+        </el-col>
+        <el-col :span="12">
+            <div class="grid-content bg-purple-light">
+                <div id="progress-panel" v-if="chosenPanel==1">
+                    <el-progress type="circle" :percentage="progress" v-bind:status="progressStatus"></el-progress>
+                    <el-button id="start" @click="startProgress">{{startButtonText}}</el-button>
+                    <el-button id="reset" @click="resetProgress">复位</el-button>
+                </div>
+            </div>
+        </el-col>
+    </el-row>
+</div>
+<!-- 引入vue脚本 -->
+<script src="/src/elementuidemo/elementuidemo.vue"></script>
+<!-- 引入css脚本 -->
+<link rel="stylesheet" href="/src/elementuidemo/elementuidemo.css"></link>
 </body>
 </html>
